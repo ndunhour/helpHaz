@@ -1,0 +1,57 @@
+* fix the boundry,
+    - collision reading for the bottom is wrong
+* create more flies
+    var numOfFlies = 5;
+* have each fly randomly zig zag
+* flies touch haz they stay on him for a couple of seconds before flying off
+* create an array of the jpgName, blockH, blockW
+    var boundries = [
+        'onTheDeck, 550, 200',
+        'underDeck, 400, 100',
+        'atThePark, 300, 250']
+    - create level player on to go with the position of array
+
+        <div id='level'>Level [i]</div>
+        i = 0 // onTheDeck
+
+    - substitue background-image with value of position of array
+
+        <canvas class="imgBox" id="test" width="775" height="400" style="background-image: url('private/onDeck.jpg');">
+            </canvas>
+
+    - set blockH and blockW using value in array
+        [i].blockH
+        [i].blockW
+
+* #level
+    - create level
+
+        level +=1;
+    - level 1-3 numOfFlies +=5
+        level 1 = 5 flies speed = 1
+        level 2 = 10 flies speed = 1
+        level 3 = 15 flies speed = 1
+    - level 4-6
+        level 4 = 5 flies speed = 2
+        level 5 = 10 flies speed = 2
+        level 6 = 15 flies speed = 2
+    - level 7-10
+        level 4 = 5 flies speed = 3
+        level 5 = 10 flies speed = 3
+        level 6 = 15 flies speed = 3
+
+* #squashed
+    - numOfFlies - squashedEm = numOfFlies;
+
+* #touched
+    - if fly touch boundry {
+        touched += 1;
+    }
+
+* get 10 photos of doggies
+    - take new photos in far view to allow more flies on screen
+    - use close up photos for lower levels because there are less flies
+
+* find an eventlistener to reconize user clicking on the flies
+* is it possible to upload premade code into Android Studio
+
