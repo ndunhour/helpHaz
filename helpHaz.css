@@ -33,12 +33,12 @@ body {
 
 
 /*-------imgBox--------*/
-.imgBox{
-    width: 775px;
-    height: 400px;
-    padding: 5px;
-    border: 1px solid black;
-    margin-bottom: 15px;
+#imgBox{
+/*    width: 775px;
+    height: 400px;*/
+    /*padding: 5px;*/
+/*    border: 1px solid black;
+    margin-bottom: 15px;*/
     /*background-image: url('private/onDeck.jpg');*/
     background-size: cover;
 }

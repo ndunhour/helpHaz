@@ -6,59 +6,56 @@ $(document).ready(function(){
         console.log(event);
     });
 
-    var c = document.getElementById("test");
+    var c = document.getElementById("imgBox");
     var rect = c.getBoundingClientRect()
-    console.log( 'rect', rect );
-    console.log('c', c.width)
     var ctx = c.getContext("2d");
+
+    // ball
     var ballRadius = 20;
-    var x = c.width/5;
-    console.log('x', x)
-    var y = c.height-20;
+    var x = c.width/2;
+    var y = c.height-30;
     var dx = 1;
-    var dy = -1;
-    var blockH = 50;
-    var blockW = 50;
+    var dy = -2;
+
+    // collision Block
+    var blockX = 180;
+    var blockY = 180;
+    var blockH = 80;
+    var blockW = 80;
+
+
     var numOfFlies = 5;
     var level = 1;
     var squashedEm = 1;
     var touched = 1;
 
-
-
-    document.addEventListener('click', function(){
-        console.log(event)
-    });
-
     function drawBall() {
-            ctx.beginPath();
-            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-            ctx.fillStyle = "#000000";
-            ctx.fill();
-            ctx.closePath();
-    }
-
-    function drawBoundry() {
         ctx.beginPath();
-        ctx.rect(180, 80, blockH, blockW, 7);
-        ctx.fillStyle = "#00f0f0";
-        // ctx.fillStyle = "rgba(255, 255, 255, .01)";
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#000000";
         ctx.fill();
         ctx.closePath();
     }
 
-    function collisionOfBoundry() {
-        var locOfBlockX = 110;
-        var locOfBlockY = 80;
+    function drawBoundry() {
+        ctx.beginPath();
+        ctx.rect(blockX,blockY,blockH,blockW);
+        ctx.fillStyle = "#e542f4";
+        ctx.fill();
+        ctx.closePath;
 
-        if(x > locOfBlockX && x < locOfBlockX + blockH && y > locOfBlockY && locOfBlockY < locOfBlockY + blockW){
-            $('#bark').css('visibility', 'visable');
-            console.log('touching haz')
-        }else{
-            console.log('not')
+    }
 
+    function collisionOfBoundry(){
+
+        if(x > blockX && x < blockX + blockW && y > blockY && y < blockY + blockH){
+            $('#bark').css('visibility', 'visible');
+            $('#touchCount').text(touched)
+            touched +=1
+        } else{
             $('#bark').css('visibility', 'hidden');
         }
+
     }
 
     // function levelUp(){
@@ -80,6 +77,8 @@ $(document).ready(function(){
         drawBall();
         drawBoundry();
         collisionOfBoundry();
+        // drawBricks();
+
 
         if(x + dx > c.width-ballRadius || x + dx < ballRadius) {
             dx = -dx;

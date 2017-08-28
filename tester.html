@@ -14,6 +14,7 @@
     var ctx = canvas.getContext("2d");
     var ballRadius = 10;
     var x = canvas.width/2;
+    console.log('first x', x)
     var y = canvas.height-30;
     var dx = 2;
     var dy = -2;
@@ -71,7 +72,7 @@
         for(c=0; c<brickColumnCount; c++) {
             for(r=0; r<brickRowCount; r++) {
                 var b = bricks[c][r];
-                console.log('b', b)
+                        console.log('after x ', x, ' b.x ' + b.x + ' brickWidth ' + brickWidth);
                 if(b.status == 1) {
                     if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                         dy = -dy;
@@ -145,23 +146,23 @@
             dy = -dy;
         }
         else if(y + dy > canvas.height-ballRadius) {
-            if(x > paddleX && x < paddleX + paddleWidth) {
-                dy = -dy;
-            }
-            else {
-                lives--;
-                if(!lives) {
-                    alert("GAME OVER");
-                    // document.location.reload();
-                }
-                else {
-                    x = canvas.width/2;
-                    y = canvas.height-30;
-                    dx = 3;
-                    dy = -3;
-                    paddleX = (canvas.width-paddleWidth)/2;
-                }
-            }
+            // if(x > paddleX && x < paddleX + paddleWidth) {
+            //     dy = -dy;
+            // }
+            // else {
+            //     lives--;
+            //     if(!lives) {
+            //         alert("GAME OVER");
+            //         // document.location.reload();
+            //     }
+            //     else {
+            //         x = canvas.width/2;
+            //         y = canvas.height-30;
+            //         dx = 3;
+            //         dy = -3;
+            //         paddleX = (canvas.width-paddleWidth)/2;
+            //     }
+            // }
         }
 
         if(rightPressed && paddleX < canvas.width-paddleWidth) {
