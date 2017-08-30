@@ -7,15 +7,17 @@ $(document).ready(function(){
     });
 
     var c = document.getElementById("imgBox");
-    var rect = c.getBoundingClientRect()
+    var rect = c.getBoundingClientRect();
     var ctx = c.getContext("2d");
 
     // ball
     var ballRadius = 20;
     var x = c.width/2;
     var y = c.height-30;
+    // var x = 100;
+    // var y = 100;
     var dx = 1;
-    var dy = -2;
+    var dy = -1;
 
     // collision Block
     var blockX = 180;
@@ -28,6 +30,8 @@ $(document).ready(function(){
     var level = 1;
     var squashedEm = 1;
     var touched = 1;
+
+    c.addEventListener('click', squashed);
 
     function drawBall() {
         ctx.beginPath();
@@ -42,7 +46,7 @@ $(document).ready(function(){
         ctx.rect(blockX,blockY,blockH,blockW);
         ctx.fillStyle = "#e542f4";
         ctx.fill();
-        ctx.closePath;
+        ctx.closePath();
 
     }
 
@@ -50,8 +54,6 @@ $(document).ready(function(){
 
         if(x > blockX && x < blockX + blockW && y > blockY && y < blockY + blockH){
             $('#bark').css('visibility', 'visible');
-            $('#touchCount').text(touched)
-            touched +=1
         } else{
             $('#bark').css('visibility', 'hidden');
         }
@@ -66,11 +68,40 @@ $(document).ready(function(){
     //     $('#level').text(level);
     // }
 
-    // function squashed(){
-    //     squashedEm += 1;
-    //     var remainder = numOfFlies - squashedEm;
-    //     $('#squashed').text(remainder);
-    // }
+    function squashed(){
+        console.log('squashed')
+        var evtX = event.layerX;
+        var evtY = event.layerY;
+        // var outSide = y + 20;
+            console.log('x and y', x+ballRadius + ' ' + (y+ballRadius))
+            console.log('evtX and evtY', evtX + ' ' + evtY)
+
+        if( x-40 < evtX && y-40 < evtY && x+40 > evtX && y+40 > evtY ){
+            console.log('in circle')
+
+        }
+
+  //  &&
+
+  // var clickHitCircle =
+
+  //   Math.sqrt(
+  //     Math.pow((evtX- x), 2) +
+  //     Math.pow((evtY - y), 2)
+  //   ) < ballRadius
+  // ;
+
+  // console.log('hit', clickHitCircle)
+        // left side of circle - outSide < evtX
+
+
+
+
+
+        // squashedEm += 1;
+        // var remainder = numOfFlies - squashedEm;
+        // $('#squashed').text(remainder);
+    }
 
     function draw() {
         ctx.clearRect(0, 0, c.width, c.height);
