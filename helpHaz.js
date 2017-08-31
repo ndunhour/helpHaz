@@ -12,21 +12,22 @@ $(document).ready(function(){
 
     // ball
     var ballRadius = 20;
-    var x = c.width/2;
-    var y = c.height-30;
-    // var x = 100;
-    // var y = 100;
-    var dx = 1;
-    var dy = -1;
+    var circles = [  {x:100,y:100,r:30,vx:1,vy:1}, // orange ball
+                     {x:275,y:300,r:30,vx:1,vy:-1}, // green ball
+                     {x:20,y:350,r:30,vx:-2,vy:-1}, // purple
+                     {x:300,y:70,r:30,vx:-1,vy:1}, // pink ball
+                     {x:450,y:50,r:30,vx:-2,vy:-1}  // tourquoise
+                    ];
+
 
     // collision Block
-    var blockX = 180;
-    var blockY = 180;
-    var blockH = 80;
-    var blockW = 80;
+    var blockX = 175;
+    var blockY = 100;
+    var blockH = 175;
+    var blockW = 500;
 
 
-    var numOfFlies = 5;
+    var numOfFlies = 3;
     var level = 1;
     var squashedEm = 1;
     var touched = 1;
@@ -34,28 +35,47 @@ $(document).ready(function(){
     c.addEventListener('click', squashed);
 
     function drawBall() {
-        ctx.beginPath();
-        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#000000";
-        ctx.fill();
-        ctx.closePath();
+
+        for(var i=0; i <circles.length; i++){
+             ctx.beginPath();
+             ctx.fillStyle = "black";
+             ctx.arc(circles[i].x,circles[i].y,circles[i].r,0,2*Math.PI,false);
+             ctx.fill();
+
+             var passTop = circles[i].x + circles[i].vx + circles[i].r;
+             var rectAll = rect.top + rect.width;
+             var passBott = circles[i].x - circles[i].r + circles[i].vx;
+             var daTop = rect.top;
+
+            if(circles[i].x + circles[i].vx > c.width-ballRadius || circles[i].x + circles[i].vx < ballRadius) {
+                circles[i].vx = - circles[i].vx;
+            }
+            if(circles[i].y + circles[i].vy > c.height-ballRadius || circles[i].y + circles[i].vy < ballRadius) {
+                circles[i].vy = - circles[i].vy;
+            }
+
+             circles[i].x += circles[i].vx;
+             circles[i].y += circles[i].vy;
+         }
     }
 
     function drawBoundry() {
         ctx.beginPath();
-        ctx.rect(blockX,blockY,blockH,blockW);
-        ctx.fillStyle = "#e542f4";
+        ctx.rect(blockX, blockY, blockW, blockH);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
         ctx.fill();
         ctx.closePath();
 
     }
 
     function collisionOfBoundry(){
-
-        if(x > blockX && x < blockX + blockW && y > blockY && y < blockY + blockH){
-            $('#bark').css('visibility', 'visible');
-        } else{
-            $('#bark').css('visibility', 'hidden');
+        for(var j=0; j<circles.length; j++){
+            if(circles[j].x > blockX && circles[j].x < blockX + blockW && circles[j].y > blockY && circles[j].y < blockY + blockH){
+                $('#bark').css('visibility', 'visible');
+                console.log('here')
+            }else{
+                $('#bark').css('visibility', 'hidden');
+            }
         }
 
     }
@@ -69,38 +89,25 @@ $(document).ready(function(){
     // }
 
     function squashed(){
-        console.log('squashed')
+        console.log('event', event)
         var evtX = event.layerX;
         var evtY = event.layerY;
-        // var outSide = y + 20;
-            console.log('x and y', x+ballRadius + ' ' + (y+ballRadius))
-            console.log('evtX and evtY', evtX + ' ' + evtY)
-
-        if( x-40 < evtX && y-40 < evtY && x+40 > evtX && y+40 > evtY ){
-            console.log('in circle')
-
+        for(var s=circles.length - 1; s >= 0; --s){
+            if( circles[s].x - circles[s].r < evtX && circles[s].y - circles[s].r < evtY && circles[s].x + circles[s].r > evtX && circles[s].y + circles[s].r > evtY ){
+                console.log('in circle', circles.length)
+                circles.splice(s,1);
+            }
         }
-
-  //  &&
-
-  // var clickHitCircle =
-
-  //   Math.sqrt(
-  //     Math.pow((evtX- x), 2) +
-  //     Math.pow((evtY - y), 2)
-  //   ) < ballRadius
-  // ;
-
-  // console.log('hit', clickHitCircle)
-        // left side of circle - outSide < evtX
-
-
-
-
+        ctx.clearRect(0,0,c.width, c.height);
 
         // squashedEm += 1;
         // var remainder = numOfFlies - squashedEm;
         // $('#squashed').text(remainder);
+
+    }
+
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
     }
 
     function draw() {
@@ -108,18 +115,6 @@ $(document).ready(function(){
         drawBall();
         drawBoundry();
         collisionOfBoundry();
-        // drawBricks();
-
-
-        if(x + dx > c.width-ballRadius || x + dx < ballRadius) {
-            dx = -dx;
-        }
-        if(y + dy > c.height-ballRadius || y + dy < ballRadius) {
-            dy = -dy;
-        }
-
-        x += dx;
-        y += dy;
     }
 
     setInterval(draw, 10);

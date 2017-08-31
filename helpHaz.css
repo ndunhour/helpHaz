@@ -54,7 +54,7 @@ body {
     background-color: white;
     font-weight: bold;
     padding: 15px;
-    margin-bottom: 15px
+    margin-bottom: 15px;
 }
 /*end imgBox*/
 
@@ -65,7 +65,7 @@ body {
 }
 ul#scoreArea{
     list-style: none;
-    padding: 15px;
+    padding: 5px;
 }
 ul#scoreArea li{
     display: inline-block;
