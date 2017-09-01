@@ -16,7 +16,7 @@ $(document).ready(function(){
                      {x:275,y:300,r:30,vx:1,vy:-1}, // green ball
                      {x:20,y:350,r:30,vx:-2,vy:-1}, // purple
                      {x:300,y:70,r:30,vx:-1,vy:1}, // pink ball
-                     {x:450,y:50,r:30,vx:-2,vy:-1}  // tourquoise
+                     {x:450,y:50,r:30,vx:-2,vy:-2}  // tourquoise
                     ];
 
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
     var numOfFlies = 3;
     var level = 1;
     var squashedEm = 1;
-    var touched = 1;
+    var touched = 0;
 
     c.addEventListener('click', squashed);
 
@@ -62,7 +62,9 @@ $(document).ready(function(){
     function drawBoundry() {
         ctx.beginPath();
         ctx.rect(blockX, blockY, blockW, blockH);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
+        // ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
+        // ctx.fillStyle = "rgba(255, 255, 255)";
+
         ctx.fill();
         ctx.closePath();
 
@@ -70,12 +72,13 @@ $(document).ready(function(){
 
     function collisionOfBoundry(){
         for(var j=0; j<circles.length; j++){
-            if(circles[j].x > blockX && circles[j].x < blockX + blockW && circles[j].y > blockY && circles[j].y < blockY + blockH){
-                $('#bark').css('visibility', 'visible');
-                console.log('here')
-            }else{
-                $('#bark').css('visibility', 'hidden');
+
+            if(circles[j].x === blockX || circles[j].x === blockX + blockY || circles[j].y === blockY || circles[j].y === blockY + blockH){
+                touched += 1;
+                $('#lives h2').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>')
+                console.log(touched)
             }
+
         }
 
     }
