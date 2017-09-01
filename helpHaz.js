@@ -1,10 +1,4 @@
 $(document).ready(function(){
-    $('.bkgrnd').on('click', function(){
-        $('.fly').fadeIn('fast');
-    });
-    $('#hiddenDiv').on('click', function(event){
-        console.log(event);
-    });
 
     var c = document.getElementById("imgBox");
     var rect = c.getBoundingClientRect();
@@ -13,10 +7,10 @@ $(document).ready(function(){
     // ball
     var ballRadius = 20;
     var circles = [  {x:100,y:100,r:30,vx:1,vy:1}, // orange ball
-                     {x:275,y:300,r:30,vx:1,vy:-1}, // green ball
-                     {x:20,y:350,r:30,vx:-2,vy:-1}, // purple
-                     {x:300,y:70,r:30,vx:-1,vy:1}, // pink ball
-                     {x:450,y:50,r:30,vx:-2,vy:-2}  // tourquoise
+                     // {x:275,y:300,r:30,vx:1,vy:-1}, // green ball
+                     // {x:20,y:350,r:30,vx:-2,vy:-1}, // purple
+                     // {x:300,y:70,r:30,vx:-1,vy:1}, // pink ball
+                     // {x:450,y:50,r:30,vx:-2,vy:-2}  // tourquoise
                     ];
 
 
@@ -30,7 +24,7 @@ $(document).ready(function(){
     var numOfFlies = 3;
     var level = 1;
     var squashedEm = 1;
-    var touched = 0;
+    var touched = 5;
 
     c.addEventListener('click', squashed);
 
@@ -74,14 +68,19 @@ $(document).ready(function(){
         for(var j=0; j<circles.length; j++){
 
             if(circles[j].x === blockX || circles[j].x === blockX + blockY || circles[j].y === blockY || circles[j].y === blockY + blockH){
-                touched += 1;
-                $('#lives h2').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>')
-                console.log(touched)
+                touched -= 1;
+                $('#lives span').remove();
+                drawHearts();
+                if(touched === 0){
+                    $('#lives').text('GAME OVER')
+                }
             }
 
         }
 
     }
+
+
 
     // function levelUp(){
     //     level += 1;
@@ -97,7 +96,6 @@ $(document).ready(function(){
         var evtY = event.layerY;
         for(var s=circles.length - 1; s >= 0; --s){
             if( circles[s].x - circles[s].r < evtX && circles[s].y - circles[s].r < evtY && circles[s].x + circles[s].r > evtX && circles[s].y + circles[s].r > evtY ){
-                console.log('in circle', circles.length)
                 circles.splice(s,1);
             }
         }
@@ -122,4 +120,9 @@ $(document).ready(function(){
 
     setInterval(draw, 10);
 
+    function drawHearts(){
+        for(var t = 0; t < touched; t++){
+            $('#lives').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>');
+        }
+    }
 });
