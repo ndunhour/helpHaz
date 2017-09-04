@@ -1,16 +1,15 @@
 $(document).ready(function(){
-
     var c = document.getElementById("imgBox");
     var rect = c.getBoundingClientRect();
     var ctx = c.getContext("2d");
 
     // ball
     var ballRadius = 20;
-    var circles = [  {x:100,y:100,r:30,vx:1,vy:1}, // orange ball
-                     // {x:275,y:300,r:30,vx:1,vy:-1}, // green ball
-                     // {x:20,y:350,r:30,vx:-2,vy:-1}, // purple
-                     // {x:300,y:70,r:30,vx:-1,vy:1}, // pink ball
-                     // {x:450,y:50,r:30,vx:-2,vy:-2}  // tourquoise
+    var circles = [  {x:100,y:100,r:20,vx:1,vy:1}, // orange ball
+                     {x:275,y:300,r:20,vx:2,vy:-1}, // green ball
+                     {x:20,y:350,r:20,vx:-1,vy:-2}, // purple
+                     {x:300,y:70,r:20,vx:-2,vy:1}, // pink ball
+                     {x:450,y:50,r:20,vx:-1,vy:-2}  // tourquoise
                     ];
 
 
@@ -27,6 +26,11 @@ $(document).ready(function(){
     var touched = 5;
 
     c.addEventListener('click', squashed);
+    function drawHearts(){
+        for(var t = 0; t < touched; t++){
+            $('#lives').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>');
+        }
+    }
 
     function drawBall() {
 
@@ -56,9 +60,7 @@ $(document).ready(function(){
     function drawBoundry() {
         ctx.beginPath();
         ctx.rect(blockX, blockY, blockW, blockH);
-        // ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
-        // ctx.fillStyle = "rgba(255, 255, 255)";
-
+        ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
         ctx.fill();
         ctx.closePath();
 
@@ -72,7 +74,7 @@ $(document).ready(function(){
                 $('#lives span').remove();
                 drawHearts();
                 if(touched === 0){
-                    $('#lives').text('GAME OVER')
+                    $('#lives').text('GAME OVER');
                 }
             }
 
@@ -91,11 +93,10 @@ $(document).ready(function(){
     // }
 
     function squashed(){
-        console.log('event', event)
         var evtX = event.layerX;
         var evtY = event.layerY;
         for(var s=circles.length - 1; s >= 0; --s){
-            if( circles[s].x - circles[s].r < evtX && circles[s].y - circles[s].r < evtY && circles[s].x + circles[s].r > evtX && circles[s].y + circles[s].r > evtY ){
+            if( circles[s].x - (circles[s].r + 40) < evtX && circles[s].y - (circles[s].r + 40) < evtY && circles[s].x + (circles[s].r + 40) > evtX && circles[s].y + (circles[s].r + 40) > evtY ){
                 circles.splice(s,1);
             }
         }
@@ -120,9 +121,5 @@ $(document).ready(function(){
 
     setInterval(draw, 10);
 
-    function drawHearts(){
-        for(var t = 0; t < touched; t++){
-            $('#lives').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>');
-        }
-    }
+
 });
