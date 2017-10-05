@@ -81,6 +81,9 @@ ul#scoreArea li{
 #touches {
     background-color: green;
 }
+#lives {
+    font-size: x-large;
+}
 /*end score*/
 
 
