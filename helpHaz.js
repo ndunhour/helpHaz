@@ -1,6 +1,7 @@
 $(document).ready(function(){
     var c = document.getElementById("imgBox");
     var start = document.getElementById("startBtn");
+    var setImg = document.getElementById("imgBox");
     var rect = c.getBoundingClientRect();
     var ctx = c.getContext("2d");
 
@@ -13,7 +14,7 @@ $(document).ready(function(){
                      {x:450,y:50,r:20,vx:-1,vy:-2,color:"black"}
                     ];
 
-
+    var images = [ ('private/underDeck.jpg'), ('private/onDeck.jpg'), ('private/atThePark.jpg')];
     // collision Block
     var blockX = 175;
     var blockY = 100;
@@ -28,6 +29,7 @@ $(document).ready(function(){
     c.addEventListener('click', squashed);
     start.addEventListener('click', draw);
 
+
     function drawHearts(){
         for(var t = 0; t < touched; t++){
             $('#lives').append('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>');
@@ -35,9 +37,7 @@ $(document).ready(function(){
     }
 
     function drawBall() {
-
         for(var i=0; i <circles.length; i++){
-
              ctx.beginPath();
              ctx.fillStyle = circles[i].color;
              ctx.arc(circles[i].x,circles[i].y,circles[i].r,0,2*Math.PI,false);
@@ -106,7 +106,12 @@ $(document).ready(function(){
                 for(var redraw = 0; redraw < circles.length; redraw++){
                     circles[redraw].color = "black";
                     squashedEm = 0;
-            }
+                    console.log('level', level);
+                }
+                level += 1;
+                if(level === 3){
+                    level = 0;
+                }
         }
         }
         ctx.clearRect(0,0,c.width, c.height);
@@ -121,6 +126,10 @@ $(document).ready(function(){
 
     // creates canvas, balls, boundry, and collision of boundry
     function draw() {
+        // setImg.setAttribute("style","background-image: url(" + images[level] + ");");
+        console.log('draw lvl', level)
+        setImg.style.backgroundImage = "url('" + images[level] + "')";
+
         ctx.clearRect(0, 0, c.width, c.height);
         drawBall();
         drawBoundry();
