@@ -1,9 +1,11 @@
 $(document).ready(function(){
     var c = document.getElementById("imgBox");
-    var start = document.getElementById("startBtn");
-    var setImg = document.getElementById("imgBox");
-    var rect = c.getBoundingClientRect();
     var ctx = c.getContext("2d");
+    var rect = c.getBoundingClientRect();
+
+    var cont = document.getElementById("continueBtn");
+    var setImg = document.getElementById("imgBox");
+    var again = document.getElementById("againBtn");
 
     // ball
     var ballRadius = 20;
@@ -27,7 +29,8 @@ $(document).ready(function(){
 
 
     c.addEventListener('click', squashed);
-    start.addEventListener('click', draw);
+    cont.addEventListener('click', next);
+    again.addEventListener('click', next);
 
 
     function drawHearts(){
@@ -83,14 +86,6 @@ $(document).ready(function(){
         }
     }
 
-
-
-    // function levelUp(){
-    //         level += 1;
-    //         console.log('level', level);
-
-    // }
-
     // get rid of circles
     function squashed(){
         var evtX = event.layerX;
@@ -102,17 +97,27 @@ $(document).ready(function(){
                 squashedEm  += 1;
             }
             if(circles.length === squashedEm){
-                $('#lives').text('LEVEL UP');
                 for(var redraw = 0; redraw < circles.length; redraw++){
                     circles[redraw].color = "black";
                     squashedEm = 0;
-                    console.log('level', level);
                 }
                 level += 1;
-                if(level === 3){
+                document.getElementById('canvas').style.display = "none";
+                document.getElementById('continueBtn').style.display = "block";
+
+
+                // resets game back to level 1
+                if(level === images.length){
                     level = 0;
+
+                    document.getElementById('canvas').style.display = "none";
+                    document.getElementById('gameOver').style.display = "block";
+                    document.getElementById('continueBtn').style.display = "none";
+                    document.getElementById('score-container').style.display = "none";
+
+
                 }
-        }
+            }
         }
         ctx.clearRect(0,0,c.width, c.height);
 
@@ -127,13 +132,25 @@ $(document).ready(function(){
     // creates canvas, balls, boundry, and collision of boundry
     function draw() {
         // setImg.setAttribute("style","background-image: url(" + images[level] + ");");
-        console.log('draw lvl', level)
         setImg.style.backgroundImage = "url('" + images[level] + "')";
-
         ctx.clearRect(0, 0, c.width, c.height);
         drawBall();
         drawBoundry();
         collisionOfBoundry();
+        $('#level').html('<h2>LEVEL ' + (level + 1) + '<h2>');
+
+    }
+
+    function next(){
+        document.getElementById('continueBtn').style.display = "none";
+        document.getElementById('canvas').style.display = "block";
+        document.getElementById('gameOver').style.display = "none";
+        document.getElementById('score-container').style.display = "block";
+
+    }
+
+    function playAgain(){
+        console.log('in again');
     }
 
     setInterval(draw, 20);

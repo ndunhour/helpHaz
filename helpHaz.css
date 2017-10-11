@@ -34,43 +34,21 @@ body {
 
 /*-------imgBox--------*/
 #imgBox{
-/*    width: 775px;
-    height: 400px;*/
-    /*padding: 5px;*/
-/*    border: 1px solid black;
-    margin-bottom: 15px;*/
-    /*background-image: url('private/onDeck.jpg');*/
     background-size: cover;
 }
-/*#hiddenDiv{
-    width: 600px;
-    height: 200px;
-    background-color: red;
-    z-index: 999;
-    margin-left: 80px;
-    margin-top: 80px;
-}*/
-#bark{
-    background-color: white;
-    font-weight: bold;
-    padding: 15px;
-    margin-bottom: 15px;
+#canvas{
+    display: none;
 }
+
 /*end imgBox*/
 
 
 /*------score----------*/
-.score-container {
+#score-container {
+    display: block;
     /*width: 30%;*/
 }
-ul#scoreArea{
-    list-style: none;
-    padding: 5px;
-}
-ul#scoreArea li{
-    display: inline-block;
 
-}
 #caught {
     background-color: red;
 }
@@ -84,8 +62,19 @@ ul#scoreArea li{
 #lives {
     font-size: x-large;
 }
+#continueBtn {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 /*end score*/
 
+/*------gameOver----------*/
+#gameOver {
+    display: none;
+    background-color: white;
+    padding: 5px;
+}
 
-
-
+/*end score*/
