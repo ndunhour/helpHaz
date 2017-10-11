@@ -7,16 +7,20 @@ $(document).ready(function(){
     var setImg = document.getElementById("imgBox");
     var again = document.getElementById("againBtn");
 
-    // ball
-    var ballRadius = 20;
-    var circles = [  {x:100,y:100,r:20,vx:1,vy:1,color:"black"},
-                     {x:275,y:300,r:20,vx:2,vy:-1,color:"black"},
-                     {x:20,y:350,r:20,vx:-1,vy:-2,color:"black"},
-                     {x:300,y:70,r:20,vx:-2,vy:1,color:"black"},
-                     {x:450,y:50,r:20,vx:-1,vy:-2,color:"black"}
+
+    var ballRadius = 20; // ball
+    var circles = [  {x:100,y:100,r:10,vx:1,vy:-2,color:"black"},
+                     {x:275,y:300,r:10,vx:-1,vy:3,color:"red"},
+                     {x:35,y:350,r:10,vx:-2,vy:-2,color:"blue"},
+                     {x:300,y:70,r:10,vx:-2,vy:1,color:"black"},
+                     {x:450,y:50,r:10,vx:-1,vy:-2,color:"black"}
                     ];
 
-    var images = [ ('private/underDeck.jpg'), ('private/onDeck.jpg'), ('private/atThePark.jpg')];
+    var images = [  ('private/underDeck.jpg'),
+                    ('private/onDeck.jpg'),
+                    ('private/atThePark.jpg')
+                    ];
+
     // collision Block
     var blockX = 175;
     var blockY = 100;
@@ -27,11 +31,9 @@ $(document).ready(function(){
     var squashedEm = 0;
     var touched = 5;
 
-
     c.addEventListener('click', squashed);
     cont.addEventListener('click', next);
     again.addEventListener('click', next);
-
 
     function drawHearts(){
         for(var t = 0; t < touched; t++){
@@ -46,18 +48,12 @@ $(document).ready(function(){
              ctx.arc(circles[i].x,circles[i].y,circles[i].r,0,2*Math.PI,false);
              ctx.fill();
 
-             var passTop = circles[i].x + circles[i].vx + circles[i].r;
-             var rectAll = rect.top + rect.width;
-             var passBott = circles[i].x - circles[i].r + circles[i].vx;
-             var daTop = rect.top;
-
             if(circles[i].x + circles[i].vx > c.width-ballRadius || circles[i].x + circles[i].vx < ballRadius) {
                 circles[i].vx = - circles[i].vx;
             }
             if(circles[i].y + circles[i].vy > c.height-ballRadius || circles[i].y + circles[i].vy < ballRadius) {
                 circles[i].vy = - circles[i].vy;
             }
-
              circles[i].x += circles[i].vx;
              circles[i].y += circles[i].vy;
          }
@@ -67,6 +63,8 @@ $(document).ready(function(){
         ctx.beginPath();
         ctx.rect(blockX, blockY, blockW, blockH);
         ctx.fillStyle = "rgba(255, 255, 255, 0.01)";
+        // ctx.fillStyle = "rgba(255, 255, 255)";
+
         ctx.fill();
         ctx.closePath();
 

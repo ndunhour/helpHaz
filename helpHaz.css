@@ -2,6 +2,8 @@ html {
   font-size: 16px;
   font-family: fantasy;
   text-align: center;
+  cursor: pointer;
+  cursor: hand;
 }
 
 body {
